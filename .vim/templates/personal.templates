@@ -1,0 +1,19 @@
+§ =============================================================
+§  Personal Information
+§ =============================================================
+
+SetMacro( 'AUTHOR',       'Robert Sand' )
+SetMacro( 'AUTHORREF',    'pepzi' )
+SetMacro( 'EMAIL',        'robert@pepzi.org' )
+SetMacro( 'ORGANIZATION', 'pepzi' )
+SetMacro( 'COMPANY',      '' )
+SetMacro( 'COPYRIGHT',    'Copyright (c) |YEAR|, |AUTHOR|' )
+SetMacro( 'LICENSE',      'GNU General Public License' )
+
+§ =============================================================
+§  Date and Time Format
+§ =============================================================
+
+§SetFormat( 'DATE', '%b %d %Y' )
+§SetFormat( 'TIME', '%H:%M' )
+§SetFormat( 'YEAR', '%Y' )
