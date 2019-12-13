@@ -5,7 +5,7 @@ export ZSH=~/.oh-my-zsh
 POWERLEVEL9K_MODE='awesome-patched'
 POWERLEVEL9K_SHORTEN_DIR_LENGTH=2
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir_writable dir vcs)
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(vi_mode status)
 
 POWERLEVEL9K_CONTEXT_DEFAULT_FOREGROUND="black"
 POWERLEVEL9K_CONTEXT_ROOT_FOREGROUND="black"
@@ -44,7 +44,7 @@ POWERLEVEL9K_STATUS_FOREGROUND="red"
 
 ZSH_THEME="powerlevel9k/powerlevel9k"
 
-plugins=(git command-not-found cabal pip)
+plugins=(git command-not-found cabal pip vi-mode)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -54,8 +54,7 @@ COMPLETION_WAITING_DOTS="true"
 
 alias lsd="ls -ld .*"
 alias zs="source ~/.zshrc"
-alias vizsh="vi ~/.zshrc"
-alias vivim="vi ~/.vim/vimrc"
-alias dit='/usr/bin/git --git-dir=~/.cfg/ --work-tree=~/'
+alias viz="vi ~/.zshrc"
+alias viv="vi ~/.vim/vimrc"
 #
 ENABLE_CORRECTION="true"
