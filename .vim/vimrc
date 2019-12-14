@@ -21,7 +21,7 @@ map ,m :emenu <C-Z>
 map ,v :edit ~/.vim/vimrc<CR>
 map ,r :source ~/.vim/vimrc<CR>
 map ,g <C-]>,
-
+map ,f :FixWhitespace<CR>
 
 map <F4> :emenu <C-Z>
 
