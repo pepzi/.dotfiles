@@ -1,0 +1,2 @@
+Rewrite .zshrc, holman's way of organizing is obsolete beacuse of oh-my-zsh.
+For any program I want to make aliases, I create a plugin for oh-my-sh instead, and add the aliases there.
