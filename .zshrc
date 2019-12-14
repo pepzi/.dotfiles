@@ -1,5 +1,6 @@
 export PATH="~/.cabal/bin/:$PATH"
 export TERM="xterm-256color"
+export EDITOR=vim
 export ZSH=~/.oh-my-zsh
 
 # all of our zsh files
