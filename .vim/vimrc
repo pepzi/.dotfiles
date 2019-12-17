@@ -26,6 +26,7 @@ Plugin 'tpope/vim-surround'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'vim-syntastic/syntastic'
+Plugin 'WolfgangMehner/c-support'
 
 call vundle#end()
 syntax on
