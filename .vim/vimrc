@@ -46,13 +46,13 @@ set wcm=<C-Z>
 
 " leader mappings
 let mapleader=","
-map ,n :NERDTreeToggle<CR>
-map ,m :emenu <C-Z>
-map ,v :edit ~/.vim/vimrc<CR>
-map ,r :source ~/.vim/vimrc<CR>
-map ,g <C-]>,
-map ,f :FixWhitespace<CR>
-map ,i gg=G<CR>
+map <Leader>n :NERDTreeToggle<CR>
+map <Leader>m :emenu <C-Z>
+map <Leader>v :edit ~/.vim/vimrc<CR>
+map <Leader>r :source ~/.vim/vimrc<CR>
+map <Leader>g <C-]>,
+map <Leader>f :FixWhitespace<CR>
+map <Leader>i gg=G<CR>
 map <F4> :emenu <C-Z>
 
 " movement in insert mode
