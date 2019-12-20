@@ -40,3 +40,5 @@ COMPLETION_WAITING_DOTS="true"
 . ~/z.sh
 
 ENABLE_CORRECTION="true"
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

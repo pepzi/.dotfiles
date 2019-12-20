@@ -6,6 +6,9 @@ call vundle#begin()
 
 Plugin 'VundleVim/Vundle.vim'
 
+Plugin 'Shougo/neocomplete.vim'
+Plugin 'Shougo/vimproc.vim'
+Plugin 'WolfgangMehner/c-support'
 Plugin 'bronson/vim-trailing-whitespace'
 Plugin 'eagletmt/ghcmod-vim'
 Plugin 'eagletmt/neco-ghc'
@@ -14,10 +17,10 @@ Plugin 'fidian/hexmode'
 Plugin 'godlygeek/tabular'
 Plugin 'jamessan/vim-gnupg'
 Plugin 'jiangmiao/auto-pairs'
+Plugin 'junegunn/fzf-vim'
 Plugin 'lukerandall/haskellmode-vim'
+Plugin 'prettier/vim-prettier'
 Plugin 'scrooloose/nerdtree'
-Plugin 'Shougo/neocomplete.vim'
-Plugin 'Shougo/vimproc.vim'
 Plugin 'tmux-plugins/vim-tmux'
 Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-fugitive'
@@ -26,8 +29,6 @@ Plugin 'tpope/vim-surround'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'vim-syntastic/syntastic'
-Plugin 'WolfgangMehner/c-support'
-Plugin 'prettier/vim-prettier'
 
 call vundle#end()
 syntax on
@@ -81,13 +82,15 @@ let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_theme="cobalt2"
 
+" auto-pairs
 let g:AutoPairsMapCh = 0
-let g:SuperTabDefaultCompletionType = "<c-n>"
-let g:SuperTabContextDefaultCompletionType = "<c-n>"
 let g:AutoPairsShortcutToggle = '<F8>'
 let g:AutoPairsShortcutFastWrap = ""
 let g:AutoPairsShortcutJump = ""
 let g:AutoPairsShortcutBackInsert = ""
+
+let g:SuperTabDefaultCompletionType = "<c-n>"
+let g:SuperTabContextDefaultCompletionType = "<c-n>"
 
 " haskell stuff
 let g:haddock_browser="lynx"
