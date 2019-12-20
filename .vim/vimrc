@@ -55,6 +55,10 @@ map <Leader>r :source ~/.vim/vimrc<CR>
 map <Leader>g <C-]>,
 map <Leader>f :FixWhitespace<CR>
 map <Leader>i gg=G<CR>
+map <Leader>pi :PluginInstall<CR>
+map <Leader>pu :PluginUpdate<CR>
+map <Leader>pc :PluginClean<CR>
+map <Leader>pl :PluginList<CR>
 map <F4> :emenu <C-Z>
 
 " movement in insert mode
