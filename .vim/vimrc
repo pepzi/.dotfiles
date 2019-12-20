@@ -18,6 +18,7 @@ Plugin 'fidian/hexmode'
 Plugin 'godlygeek/tabular'
 Plugin 'jamessan/vim-gnupg'
 Plugin 'jiangmiao/auto-pairs'
+Plugin 'jlanzarotta/bufexplorer'
 Plugin 'junegunn/fzf.vim'
 Plugin 'lukerandall/haskellmode-vim'
 Plugin 'prettier/vim-prettier'
@@ -48,18 +49,23 @@ set wcm=<C-Z>
 
 " leader mappings
 let mapleader=","
-map <Leader>n :NERDTreeToggle<CR>
-map <Leader>m :emenu <C-Z>
-map <Leader>v :edit ~/.vim/vimrc<CR>
-map <Leader>r :source ~/.vim/vimrc<CR>
-map <Leader>g <C-]>,
-map <Leader>f :FixWhitespace<CR>
-map <Leader>i gg=G<CR>
-map <Leader>pi :PluginInstall<CR>
-map <Leader>pu :PluginUpdate<CR>
-map <Leader>pc :PluginClean<CR>
-map <Leader>pl :PluginList<CR>
 map <F4> :emenu <C-Z>
+map <Leader>f :FixWhitespace<CR>
+map <Leader>g <C-]>,
+map <Leader>i gg=G<CR>
+map <Leader>m :emenu <C-Z>
+map <Leader>n :NERDTreeToggle<CR>
+map <Leader>pc :PluginClean<CR>
+map <Leader>pi :PluginInstall<CR>
+map <Leader>pl :PluginList<CR>
+map <Leader>pu :PluginUpdate<CR>
+map <Leader>r :source ~/.vim/vimrc<CR>
+map <Leader>v :edit ~/.vim/vimrc<CR>
+map <Leader><Leader> :ToggleBufExplorer<CR>
+" nnoremap <silent> <Leader> :BufExplorer<CR>
+" nnoremap <Leader><Leader> :ToggleBufExplorer<CR>
+" nnoremap <silent> <m-F11> :BufExplorerHorizontalSplit<CR>
+" nnoremap <silent> <c-F11> :BufExplorerVerticalSplit<CR>
 
 " movement in insert mode
 inoremap <C-k>   <Up>
@@ -72,9 +78,9 @@ autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif
 
 augroup AutoSaveFolds
-    autocmd!
-    autocmd BufWinLeave ?* mkview 1
-    autocmd BufWinEnter ?* silent! loadview 1
+autocmd!
+autocmd BufWinLeave ?* mkview 1
+autocmd BufWinEnter ?* silent! loadview 1
 augroup END
 
 " syntastic settings
@@ -109,22 +115,22 @@ let g:neocomplete#enable_at_startup = 1
 let g:neocomplete#enable_smart_case = 1
 let g:neocomplete#sources#syntax#min_keyword_length = 3
 let g:neocomplete#sources#dictionary#dictionaries = {
-            \ 'default' : '',
-            \ 'vimshell' : $HOME.'/.vimshell_hist',
-            \ 'scheme' : $HOME.'/.gosh_completions'
-            \ }
+        \ 'default' : '',
+        \ 'vimshell' : $HOME.'/.vimshell_hist',
+        \ 'scheme' : $HOME.'/.gosh_completions'
+        \ }
 if !exists('g:neocomplete#keyword_patterns')
-    let g:neocomplete#keyword_patterns = {}
+let g:neocomplete#keyword_patterns = {}
 endif
 let g:neocomplete#keyword_patterns['default'] = '\h\w*'
 inoremap <expr><C-g>     neocomplete#undo_completion()
 inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
 function! s:my_cr_function()
-    return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
+return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
 endfunction
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 if !exists('g:neocomplete#sources#omni#input_patterns')
-    let g:neocomplete#sources#omni#input_patterns = {}
+let g:neocomplete#sources#omni#input_patterns = {}
 endif
 let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
 
