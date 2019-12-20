@@ -42,3 +42,4 @@ COMPLETION_WAITING_DOTS="true"
 ENABLE_CORRECTION="true"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+export FZF_DEFAULT_OPS="--extended"

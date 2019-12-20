@@ -2,6 +2,7 @@ set nocompatible
 filetype off
 
 set rtp+=~/.vim/bundle/Vundle.vim
+set rtp+=~/.fzf
 call vundle#begin()
 
 Plugin 'VundleVim/Vundle.vim'
@@ -17,7 +18,7 @@ Plugin 'fidian/hexmode'
 Plugin 'godlygeek/tabular'
 Plugin 'jamessan/vim-gnupg'
 Plugin 'jiangmiao/auto-pairs'
-Plugin 'junegunn/fzf-vim'
+Plugin 'junegunn/fzf.vim'
 Plugin 'lukerandall/haskellmode-vim'
 Plugin 'prettier/vim-prettier'
 Plugin 'scrooloose/nerdtree'
