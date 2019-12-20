@@ -71,10 +71,10 @@ inoremap <C-l>   <Right>
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif
 
-augroup remember_folds
+augroup AutoSaveFolds
     autocmd!
-    autocmd BufWinLeave * mkview
-    autocmd BufWinEnter * silent! loadview
+    autocmd BufWinLeave ?* mkview 1
+    autocmd BufWinEnter ?* silent! loadview 1
 augroup END
 
 " syntastic settings
