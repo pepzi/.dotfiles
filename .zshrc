@@ -31,7 +31,7 @@ done
 
 unset config_files
 
-plugins=(git command-not-found cabal pip vi-mode)
+plugins=(git command-not-found cabal pip vi-mode sudo)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -43,3 +43,5 @@ ENABLE_CORRECTION="true"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 export FZF_DEFAULT_OPS="--extended"
+export FZF_DEFAULT_COMMAND="fd --type f -H"
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
