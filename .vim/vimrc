@@ -1,8 +1,7 @@
+" Plugin {{{
 set nocompatible
 filetype off
-
 set rtp+=~/.vim/bundle/Vundle.vim
-set rtp+=~/.fzf
 call vundle#begin()
 
 Plugin 'VundleVim/Vundle.vim'
@@ -16,7 +15,6 @@ Plugin 'godlygeek/tabular'
 Plugin 'honza/vim-snippets'
 Plugin 'jamessan/vim-gnupg'
 Plugin 'jiangmiao/auto-pairs'
-Plugin 'jlanzarotta/bufexplorer'
 Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim'
 Plugin 'lukerandall/haskellmode-vim'
@@ -32,22 +30,28 @@ Plugin 'vim-airline/vim-airline-themes'
 Plugin 'vim-syntastic/syntastic'
 
 call vundle#end()
+" }}}
+" Basic settings {{{
 syntax on
 filetype plugin indent on
-
-" set commands
-set number
-set tabstop=4
-set shiftwidth=4
-set expandtab
-set shortmess=I
-set relativenumber
-set wildmenu
 set cpo-=<
+set expandtab
+set foldlevelstart=0
+set number
+set relativenumber
+set shiftwidth=4
+set shortmess=I
+set showcmd
+set tabstop=4
 set wcm=<C-Z>
-
-" leader mappings
+set wildmenu
+set foldmethod=marker
+set foldtext=MyFoldText()
+colo torte
+" }}}
+" Mappings {{{
 let mapleader=","
+
 map <F4> :emenu <C-Z>
 map <Leader>f :FixWhitespace<CR>
 map <Leader>g <C-]>,
@@ -60,56 +64,82 @@ map <Leader>pl :PluginList<CR>
 map <Leader>pu :PluginUpdate<CR>
 map <Leader>r :source ~/.vim/vimrc<CR>
 map <Leader>v :edit ~/.vim/vimrc<CR>
-map <Leader>w :Window<CR>;
-map <Leader><Leader> :ToggleBufExplorer<CR>
-" nnoremap <silent> <Leader> :BufExplorer<CR>
-" nnoremap <Leader><Leader> :ToggleBufExplorer<CR>
-" nnoremap <silent> <m-F11> :BufExplorerHorizontalSplit<CR>
-" nnoremap <silent> <c-F11> :BufExplorerVerticalSplit<CR>
 
+nnoremap q: <nop>
+nnoremap Q  <nop>
+
+nnoremap <F2> :call ToggleSyntastic()<CR>
 nnoremap <Leader>b :Buffers<CR>
-" " movement in insert mode
-" inoremap <C-k>   <Up>
-" inoremap <C-j>   <Down>
-" inoremap <C-h>   <Left>
-" inoremap <C-l>   <Right>
-
+nnoremap <Leader>w :Window<CR>
+" }}}
+" Autocommands {{{
 " if vim is started with a directory as argument, show NERDTree
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif
 
-" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsListSnippets="<s-tab>"
-let g:UltiSnipsJumpForwardTrigger="<c-k>"
-let g:UltiSnipsJumpBackwardTrigger="<c-j>"
-let g:UltiSnipsSnippetsDir = '~/.vim/bundle/vim-snippets/UltiSnips'
-" If you want :UltiSnipsEdit to split your window.
-let g:UltiSnipsEditSplit="vertical"
-" Built in complete funcion messes with <c-k>, remap it like this
-inoremap <c-x><c-k> <c-x><c-k>
-
-" syntastic settings
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 0
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-
-" airline
+" make and load views automatically
+autocmd BufWinLeave ?* mkview
+autocmd BufWinEnter ?* silent loadview
+" }}}
+" Plugin settings{{{
+" Airline {{{
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_theme="cobalt2"
-
-" auto-pairs
+" }}}
+" Auto-pairs {{{
 let g:AutoPairsMapCh = 0
 let g:AutoPairsShortcutToggle = '<F8>'
 let g:AutoPairsShortcutFastWrap = ""
 let g:AutoPairsShortcutJump = ""
 let g:AutoPairsShortcutBackInsert = ""
-
-" haskell stuff
+" }}}
+" Fzf {{{
+set rtp+=~/.fzf
+" }}}
+" Haskell {{{
 let g:haddock_browser="lynx"
 au BufEnter *.hs compiler ghc
 let g:haskellmode_completion_ghc = 0
 autocmd FileType haskell setlocal omnifunc=#necoghc#omnifunc
+" }}}
+" Syntastic {{{
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
 
+
+" }}}
+" UltiSnips {{{
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsListSnippets="<s-tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-k>"
+let g:UltiSnipsJumpBackwardTrigger="<c-j>"
+let g:UltiSnipsSnippetsDir = '~/.vim/bundle/vim-snippets/UltiSnips'
+let g:UltiSnipsEditSplit="vertical"
+" Built in complete funcion messes with <c-k>, remap it like this
+inoremap <c-x><c-k> <c-x><c-k>
+"}}}
+" }}}
+" Functions {{{
+function! ToggleSyntastic()
+    for i in range(1, winnr('$'))
+        let bnum = winbufnr(i)
+        if getbufvar(bnum, '&buftype') == 'quickfix'
+            lclose
+            return
+        endif
+    endfor
+    SyntasticCheck
+endfunction
+function! MyFoldText()
+    let nblines = v:foldend - v:foldstart + 1
+    let w = winwidth(0) - &foldcolumn - (&number ? 8 : 0)
+    let line = getline(v:foldstart)
+    let comment = substitute(line, '/\*\|\*/\|{{{\d\=', '', 'g')
+    let expansionString = repeat(".", w - strwidth(nblines.comment.'"'))
+    let txt = '"' . comment . expansionString . nblines
+    return txt
+endfunction
+" }}}
