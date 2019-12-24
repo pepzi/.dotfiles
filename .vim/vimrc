@@ -1,4 +1,5 @@
 " Plugin {{{
+"   * Vundle pre-configure
 set nocompatible
 filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -15,10 +16,9 @@ Plugin 'godlygeek/tabular'
 Plugin 'honza/vim-snippets'
 Plugin 'jamessan/vim-gnupg'
 Plugin 'jiangmiao/auto-pairs'
-Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim'
+Plugin 'junegunn/fzf'
 Plugin 'lukerandall/haskellmode-vim'
-Plugin 'prettier/vim-prettier'
 Plugin 'scrooloose/nerdtree'
 Plugin 'tmux-plugins/vim-tmux'
 Plugin 'tpope/vim-commentary'
@@ -30,7 +30,17 @@ Plugin 'vim-airline/vim-airline-themes'
 Plugin 'vim-syntastic/syntastic'
 
 call vundle#end()
+
+call plug#begin('~/.vim/plugged')
+
+Plug 'prettier/vim-prettier', {
+  \ 'do': 'yarn install',
+  \ 'for': ['c', 'php', 'javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html'] }
+
+call plug#end()
+
 " }}}
+
 " Basic settings {{{
 syntax on
 filetype plugin indent on
@@ -64,7 +74,7 @@ map <Leader>pl :PluginList<CR>
 map <Leader>pu :PluginUpdate<CR>
 map <Leader>r :source ~/.vim/vimrc<CR>
 map <Leader>v :edit ~/.vim/vimrc<CR>
-
+nmap <Leader>p <nop>:w
 nnoremap q: <nop>
 nnoremap Q  <nop>
 
@@ -73,45 +83,44 @@ nnoremap <Leader>b :Buffers<CR>
 nnoremap <Leader>w :Window<CR>
 " }}}
 " Autocommands {{{
-" if vim is started with a directory as argument, show NERDTree
+"   * NERDTree {{{
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif
-
-" make and load views automatically
-autocmd BufWinLeave ?* mkview
-autocmd BufWinEnter ?* silent loadview
+" }}}
+"   * mkview/loadview {{{
+" autocmd BufWinLeave ?* mkview
+" autocmd BufWinEnter ?* silent loadview
+" }}}
 " }}}
 " Plugin settings{{{
-" Airline {{{
+"   * Airline {{{
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_theme="cobalt2"
 " }}}
-" Auto-pairs {{{
+"   * Auto-pairs {{{
 let g:AutoPairsMapCh = 0
 let g:AutoPairsShortcutToggle = '<F8>'
 let g:AutoPairsShortcutFastWrap = ""
 let g:AutoPairsShortcutJump = ""
 let g:AutoPairsShortcutBackInsert = ""
 " }}}
-" Fzf {{{
+"   * Fzf {{{
 set rtp+=~/.fzf
 " }}}
-" Haskell {{{
+"   * Haskell {{{
 let g:haddock_browser="lynx"
 au BufEnter *.hs compiler ghc
 let g:haskellmode_completion_ghc = 0
 autocmd FileType haskell setlocal omnifunc=#necoghc#omnifunc
 " }}}
-" Syntastic {{{
+"   * Syntastic {{{
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
-
-
 " }}}
-" UltiSnips {{{
+"   * UltiSnips {{{
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsListSnippets="<s-tab>"
 let g:UltiSnipsJumpForwardTrigger="<c-k>"
@@ -132,14 +141,5 @@ function! ToggleSyntastic()
         endif
     endfor
     SyntasticCheck
-endfunction
-function! MyFoldText()
-    let nblines = v:foldend - v:foldstart + 1
-    let w = winwidth(0) - &foldcolumn - (&number ? 8 : 0)
-    let line = getline(v:foldstart)
-    let comment = substitute(line, '/\*\|\*/\|{{{\d\=', '', 'g')
-    let expansionString = repeat(".", w - strwidth(nblines.comment.'"'))
-    let txt = '"' . comment . expansionString . nblines
-    return txt
 endfunction
 " }}}
