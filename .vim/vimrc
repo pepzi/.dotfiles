@@ -3,10 +3,8 @@ set nocompatible
 filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
-
 Plugin 'VundleVim/Vundle.vim'
 
-Plugin 'SirVer/ultisnips'
 Plugin 'bronson/vim-trailing-whitespace'
 Plugin 'eagletmt/ghcmod-vim'
 Plugin 'eagletmt/neco-ghc'
@@ -18,8 +16,8 @@ Plugin 'jiangmiao/auto-pairs'
 Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim'
 Plugin 'lukerandall/haskellmode-vim'
-Plugin 'prettier/vim-prettier'
 Plugin 'scrooloose/nerdtree'
+Plugin 'SirVer/ultisnips'
 Plugin 'tmux-plugins/vim-tmux'
 Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-fugitive'
@@ -27,6 +25,7 @@ Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-surround'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
+Plugin 'vim-scripts/argtextobj.vim'
 Plugin 'vim-syntastic/syntastic'
 
 call vundle#end()
@@ -34,9 +33,12 @@ call vundle#end()
 " Basic settings {{{
 syntax on
 filetype plugin indent on
+
 set cpo-=<
 set expandtab
 set foldlevelstart=0
+set foldmethod=marker
+set foldtext=MyFoldText()
 set number
 set relativenumber
 set shiftwidth=4
@@ -45,8 +47,7 @@ set showcmd
 set tabstop=4
 set wcm=<C-Z>
 set wildmenu
-set foldmethod=marker
-set foldtext=MyFoldText()
+
 colo torte
 " }}}
 " Mappings {{{
@@ -63,6 +64,7 @@ map <Leader>pi :PluginInstall<CR>
 map <Leader>pl :PluginList<CR>
 map <Leader>pu :PluginUpdate<CR>
 map <Leader>r :source ~/.vim/vimrc<CR>
+map <Leader>s :sort -i<CR>
 map <Leader>v :edit ~/.vim/vimrc<CR>
 
 nnoremap q: <nop>
@@ -78,46 +80,44 @@ autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif
 
 " make and load views automatically
-autocmd BufWinLeave ?* mkview
 autocmd BufWinEnter ?* silent loadview
+autocmd BufWinLeave ?* mkview
 " }}}
 " Plugin settings{{{
 " Airline {{{
-let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
+let g:airline_powerline_fonts = 1
 let g:airline_theme="cobalt2"
 " }}}
 " Auto-pairs {{{
 let g:AutoPairsMapCh = 0
-let g:AutoPairsShortcutToggle = '<F8>'
+let g:AutoPairsShortcutBackInsert = ""
 let g:AutoPairsShortcutFastWrap = ""
 let g:AutoPairsShortcutJump = ""
-let g:AutoPairsShortcutBackInsert = ""
+let g:AutoPairsShortcutToggle = '<F8>'
 " }}}
 " Fzf {{{
 set rtp+=~/.fzf
 " }}}
 " Haskell {{{
-let g:haddock_browser="lynx"
 au BufEnter *.hs compiler ghc
-let g:haskellmode_completion_ghc = 0
 autocmd FileType haskell setlocal omnifunc=#necoghc#omnifunc
+let g:haddock_browser="lynx"
+let g:haskellmode_completion_ghc = 0
 " }}}
 " Syntastic {{{
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
-
-
 " }}}
 " UltiSnips {{{
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsListSnippets="<s-tab>"
-let g:UltiSnipsJumpForwardTrigger="<c-k>"
-let g:UltiSnipsJumpBackwardTrigger="<c-j>"
-let g:UltiSnipsSnippetsDir = '~/.vim/bundle/vim-snippets/UltiSnips'
 let g:UltiSnipsEditSplit="vertical"
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<c-j>"
+let g:UltiSnipsJumpForwardTrigger="<c-k>"
+let g:UltiSnipsListSnippets="<s-tab>"
+let g:UltiSnipsSnippetsDir = '~/.vim/bundle/vim-snippets/UltiSnips'
 " Built in complete funcion messes with <c-k>, remap it like this
 inoremap <c-x><c-k> <c-x><c-k>
 "}}}
