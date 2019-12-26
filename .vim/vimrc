@@ -53,26 +53,25 @@ colo torte
 " Mappings {{{
 let mapleader=","
 
-map <F4> :emenu <C-Z>
-map <Leader>f :FixWhitespace<CR>
-map <Leader>g <C-]>,
-map <Leader>i gg=G<CR>
-map <Leader>m :emenu <C-Z>
-map <Leader>n :NERDTreeToggle<CR>
-map <Leader>pc :PluginClean<CR>
-map <Leader>pi :PluginInstall<CR>
-map <Leader>pl :PluginList<CR>
-map <Leader>pu :PluginUpdate<CR>
-map <Leader>r :source ~/.vim/vimrc<CR>
-map <Leader>s :sort -i<CR>
-map <Leader>v :edit ~/.vim/vimrc<CR>
-
-nnoremap q: <nop>
-nnoremap Q  <nop>
-
-nnoremap <F2> :call ToggleSyntastic()<CR>
 nnoremap <Leader>b :Buffers<CR>
+nnoremap <Leader>e :call ToggleSyntastic()<CR>
+nnoremap <Leader>f :FixWhitespace<CR>
+nnoremap <Leader>g <C-]>,
+nnoremap <Leader>i gg=G<CR>
+nnoremap <Leader>m :emenu <C-Z>
+nnoremap <Leader>n :NERDTreeToggle<CR>
+nnoremap <Leader>pc :PluginClean<CR>
+nnoremap <Leader>pi :PluginInstall<CR>
+nnoremap <Leader>pl :PluginList<CR>
+nnoremap <Leader>pu :PluginUpdate<CR>
+nnoremap <Leader>r :source ~/.vim/vimrc<CR>
+nnoremap <Leader>v :edit ~/.vim/vimrc<CR>
+noremap <Leader>sc :sort<CR>
+noremap <Leader>ss :sort i<CR>
 nnoremap <Leader>w :Window<CR>
+nnoremap Q  <nop>
+nnoremap q: <nop>
+
 " }}}
 " Autocommands {{{
 " if vim is started with a directory as argument, show NERDTree
