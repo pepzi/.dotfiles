@@ -1,3 +1,10 @@
+"                                   .__/\               .__
+"        ______   ____ _____________|__)/______   ___  _|__| ____________   ____
+"        \____ \_/ __ \\____ \___   /  |/  ___/   \  \/ /  |/     \_  __ \_/ ___\
+"        |  |_> >  ___/|  |_> >    /|  |\___ \     \   /|  |  Y Y  \  | \/\  \___
+"        |   __/ \___  >   __/_____ \__/____  >  /\ \_/ |__|__|_|  /__|    \___  >
+"        |__|        \/|__|        \/       \/   \/              \/            \/
+"
 " Plugin {{{
 set nocompatible
 filetype off
@@ -10,6 +17,7 @@ Plugin 'eagletmt/ghcmod-vim'
 Plugin 'eagletmt/neco-ghc'
 Plugin 'fidian/hexmode'
 Plugin 'godlygeek/tabular'
+Plugin 'easymotion/vim-easymotion'
 Plugin 'honza/vim-snippets'
 Plugin 'jamessan/vim-gnupg'
 Plugin 'jiangmiao/auto-pairs'
@@ -29,7 +37,7 @@ Plugin 'vim-scripts/argtextobj.vim'
 Plugin 'vim-syntastic/syntastic'
 
 call vundle#end()
-" }}}
+" /Plugin }}}
 " Basic settings {{{
 syntax on
 filetype plugin indent on
@@ -49,7 +57,7 @@ set wcm=<C-Z>
 set wildmenu
 
 colo torte
-" }}}
+" /Basic settings }}}
 " Mappings {{{
 let mapleader=","
 
@@ -66,51 +74,60 @@ nnoremap <Leader>pl :PluginList<CR>
 nnoremap <Leader>pu :PluginUpdate<CR>
 nnoremap <Leader>r :source ~/.vim/vimrc<CR>
 nnoremap <Leader>v :edit ~/.vim/vimrc<CR>
+nnoremap <Leader>w :Window<CR>
 noremap <Leader>sc :sort<CR>
 noremap <Leader>ss :sort i<CR>
-nnoremap <Leader>w :Window<CR>
-nnoremap Q  <nop>
-nnoremap q: <nop>
+noremap Q  <nop>
+noremap q: <nop>
 
-" }}}
+" /Mappings }}}
+" Custom ex commands {{{
+
+" :W sudo saves the file
+command W w !sudo tee % > /dev/null
+" Clear all registers
+command KillRegs execute(ClearAllRegisters())
+
+"" /Custom ex commands }}}
 " Autocommands {{{
 " if vim is started with a directory as argument, show NERDTree
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif
 
 " make and load views automatically
-autocmd BufWinEnter ?* silent loadview
-autocmd BufWinLeave ?* mkview
-" }}}
-" Plugin settings{{{
-" Airline {{{
+autocmd! BufWinLeave,BufWritePost,BufLeave,WinLeave ?* if !empty(glob(expand('%:p'))) | mkview | endif
+autocmd! BufWinEnter ?* if !empty(glob(expand('%:p'))) | silent loadview | endif
+
+" /Autocommands }}}
+" Plugin settings {{{
+" * Plugin Airline {{{
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
 let g:airline_theme="cobalt2"
-" }}}
-" Auto-pairs {{{
+" * Plugin /Airline }}}
+" * Plugin Auto-pairs {{{
 let g:AutoPairsMapCh = 0
 let g:AutoPairsShortcutBackInsert = ""
 let g:AutoPairsShortcutFastWrap = ""
 let g:AutoPairsShortcutJump = ""
 let g:AutoPairsShortcutToggle = '<F8>'
-" }}}
-" Fzf {{{
+" * Plugin /Auto-pairs }}}
+" * Plugin Fzf {{{
 set rtp+=~/.fzf
-" }}}
-" Haskell {{{
+" * Plugin /Fzf }}}
+" * Plugin Haskell {{{
 au BufEnter *.hs compiler ghc
 autocmd FileType haskell setlocal omnifunc=#necoghc#omnifunc
 let g:haddock_browser="lynx"
 let g:haskellmode_completion_ghc = 0
-" }}}
-" Syntastic {{{
+" * Plugin /Haskell }}}
+" * Plugin Syntastic {{{
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
-" }}}
-" UltiSnips {{{
+" * Plugin /Syntastic }}}
+" * Plugin UltiSnips {{{
 let g:UltiSnipsEditSplit="vertical"
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<c-j>"
@@ -119,8 +136,8 @@ let g:UltiSnipsListSnippets="<s-tab>"
 let g:UltiSnipsSnippetsDir = '~/.vim/bundle/vim-snippets/UltiSnips'
 " Built in complete funcion messes with <c-k>, remap it like this
 inoremap <c-x><c-k> <c-x><c-k>
-"}}}
-" }}}
+" * Plugin /Ultisnips }}}
+" /Plugin Settings }}}
 " Functions {{{
 function! ToggleSyntastic()
     for i in range(1, winnr('$'))
@@ -132,6 +149,13 @@ function! ToggleSyntastic()
     endfor
     SyntasticCheck
 endfunction
+function ClearAllRegisters()
+    let regs=split('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/-"', '\zs')
+    for r in regs
+        call setreg(r, [])
+    endfor
+    echom "All registered cleared"
+endfunction
 function! MyFoldText()
     let nblines = v:foldend - v:foldstart + 1
     let w = winwidth(0) - &foldcolumn - (&number ? 8 : 0)
@@ -141,4 +165,4 @@ function! MyFoldText()
     let txt = '"' . comment . expansionString . nblines
     return txt
 endfunction
-" }}}
+" /Functions }}}
