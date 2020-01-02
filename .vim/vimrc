@@ -61,21 +61,31 @@ colo torte
 " Mappings {{{
 let mapleader=","
 
-nnoremap <Leader>b :Buffers<CR>
-nnoremap <Leader>e :call ToggleSyntastic()<CR>
-nnoremap <Leader>f :FixWhitespace<CR>
+nnoremap <Leader>cb :Buffers<CR>
+nnoremap <Leader>cw :Window<CR>
+nnoremap <Leader>en :edit ~/notes/vim.md<CR>
+nnoremap <Leader>eSn :split ~/notes/vim.md<CR>
+nnoremap <Leader>esn :vsplit ~/notes/vim.md<CR>
+nnoremap <Leader>eSv :split ~/.vim/vimrc<CR>
+nnoremap <Leader>esv :vsplit ~/.vim/vimrc<CR>
+nnoremap <Leader>eSz :split ~/.zshrc<CR>
+nnoremap <Leader>esz :vsplit ~/.zshrc<CR>
+nnoremap <Leader>ev :edit ~/.vim/vimrc<CR>
+nnoremap <Leader>ez :edit ~/.zshrc<CR>
+nnoremap <Leader>fi gg=G<CR>
+nnoremap <Leader>fw :FixWhitespace<CR>
 nnoremap <Leader>g <C-]>,
-nnoremap <Leader>i gg=G<CR>
 nnoremap <Leader>m :emenu <C-Z>
-nnoremap <Leader>n :NERDTreeToggle<CR>
 nnoremap <Leader>pc :PluginClean<CR>
 nnoremap <Leader>pi :PluginInstall<CR>
 nnoremap <Leader>pl :PluginList<CR>
 nnoremap <Leader>pu :PluginUpdate<CR>
-nnoremap <Leader>r :source ~/.vim/vimrc<CR>
-nnoremap <Leader>v :edit ~/.vim/vimrc<CR>
-nnoremap <Leader>w :Window<CR>
+nnoremap <Leader>te :call ToggleSyntastic()<CR>
+nnoremap <Leader>tn :NERDTreeToggle<CR>
+noremap <Leader>r :source ~/.vim/vimrc<CR>
 noremap <Leader>sc :sort<CR>
+noremap <Leader>sip vip :sort i<CR>
+noremap <Leader>Sip vip :sort<CR>
 noremap <Leader>ss :sort i<CR>
 noremap Q  <nop>
 noremap q: <nop>
@@ -112,6 +122,15 @@ let g:AutoPairsShortcutFastWrap = ""
 let g:AutoPairsShortcutJump = ""
 let g:AutoPairsShortcutToggle = '<F8>'
 " * Plugin /Auto-pairs }}}
+" * Plugin Easymotion {{{
+let g:EasyMotion_do_mapping = 0
+let g:EasyMotion_smartcase = 1
+
+nmap s <Plug>(easymotion-overwin-f2)
+
+map <Leader>j <Plug>(easymotion-j)
+map <Leader>k <Plug>(easymotion-k)
+" * Plugin /Easymotion }}}
 " * Plugin Fzf {{{
 set rtp+=~/.fzf
 " * Plugin /Fzf }}}
