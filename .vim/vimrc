@@ -90,6 +90,15 @@ noremap <Leader>ss :sort i<CR>
 noremap Q  <nop>
 noremap q: <nop>
 
+" <Alt-hjkl>
+execute "set <M-h>=\eh"
+execute "set <M-j>=\ej"
+execute "set <M-k>=\ek"
+execute "set <M-l>=\el"
+nnoremap <M-h> <C-w><Left>
+nnoremap <M-j> <C-w><Down>
+nnoremap <M-k> <C-w><Up>
+nnoremap <M-l> <C-w><Right>
 " /Mappings }}}
 " Custom ex commands {{{
 
