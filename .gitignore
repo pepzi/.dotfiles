@@ -1,6 +1,0 @@
-*.swp
-.git
-.github
-.vim/.netrwhist
-.vim/.VimballRecord
-.vim/view/

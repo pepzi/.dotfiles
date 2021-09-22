@@ -1,7 +1,0 @@
-alias lsd="ls -ld .*"
-alias lsh="ls -A"
-alias zs="source ~/.zshrc"
-alias viz="vi ~/.zshrc"
-alias viv="vi ~/.vim/vimrc"
-alias more="less"
-alias cls="clear"
